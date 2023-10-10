@@ -3,105 +3,11 @@ import { useEffect } from "react";
 import "./Pokedex.css";
 import logoImage from "../src/img/logo.png"
 import {PokedexUseState, useFetchReducer} from "../src/PokedexUseState.js"
-
-
-const Title = ({logo}) => {
-    return (
-        <div className="title">
-            <img src={logo}/>
-        </div>
-    );
-};
-const Pagination = ({page, totalPages, onChange, goButtonOnClick, backButtonOnClick, selectedPokemon}) => {
-    return (
-        <div style={{display: selectedPokemon ? "none" : "block"}} id="pagination">
-            <button onClick ={backButtonOnClick} className='pagination-button' id="back-button">Back</button>
-            <input type="number" value={page} onChange={onChange} className='pagination-input' id="page-number"></input>
-            <label className='total-pages'>{totalPages}</label>
-            <button onClick={goButtonOnClick} className='pagination-button' id="next-button">Go </button> 
-        </div>
-        
-    );
-}
-const Loading = ({loading}) => {
-    return(
-        <h1 className='loading'>{(loading ? "Cargando...": "")}</h1>
-    );
-}
-const Pokemon = ({source, name, onClick}) => {
-    return (
-        <div className='container'>
-            <img className='pokemon'
-                onClick={onClick}
-                name={name}
-                src={source}
-            />
-        </div>
-    )
-    
-}
-
-const PokemonList = ({pokemonsListData, pokemonOnClick, selectedPokemon}) =>{
-
-    if(pokemonsListData){
-        return (
-            <div  className='pokemon-list' style={{display: selectedPokemon ? "none" : "grid"}}>
-            {
-                pokemonsListData.map((pokemon, index) => {
-                    return <Pokemon
-                            onClick={(event) => {pokemonOnClick(event)}} 
-                            source = {pokemon.sprites.other['official-artwork'].front_default} 
-                            key={`${pokemon.name}-${index}`} 
-                            name={pokemon.name}
-                        />
-                })
-            }
-            </div>
-        );
-    }
-    
-}
-
-const SelectedPokemon = ({ selectedPokemon, handleCloseButton }) => {
-   
-    if(selectedPokemon){
-        return (
-            
-            <div className='pokemon-info' style={{display: selectedPokemon ?  "block" : "none"}}>
-                <button onClick={handleCloseButton} className='close-button'>X</button>
-
-                
-                <div className='container'>
-                    
-                    <img className='selected-pokemon'
-                        src={selectedPokemon.sprites.other['official-artwork'].front_default}
-                    />
-                    <h2>{selectedPokemon.name.toUpperCase()}</h2>
-                    
-                    <div className='types'>
-                        {selectedPokemon.types.map((type, index) =>{
-                            return <h3 key={`${type}-${index}`} className={`type ${type.type.name}`}>{type.type.name}</h3>
-                        })}
-                    </div>
-                    <ul>{`Height: ${selectedPokemon.height} Cm.`}</ul>
-                    <ul>{`Weight: ${selectedPokemon.weight/10} Kg.`}</ul>
-                    <div className='stats'>
-                        {
-                            selectedPokemon.stats.map((stat, index) => {
-                                return <ul key={`${stat}-${index}`}>{`${stat.stat.name.toUpperCase()}: ${stat.base_stat}`}</ul>
-                            })
-                        }
-                    </div>
-                   
-                    
-    
-                </div>
-    
-            </div>
-        )
-    };
-   
-};
+import Title from "../src/components/Title.js"
+import Pagination from './components/Pagination.js';
+import Loading from './components/Loading.js';
+import PokemonList from './components/PokemonsList.js';
+import SelectedPokemon from "./components/SelectedPokemon.js"
 
 
 

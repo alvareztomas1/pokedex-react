@@ -45,7 +45,7 @@ export const useFetchReducer = (currentPage, setCurrentPage) => {
     
     
     const handleGoClick = () => {
-        if(currentPage === changedPage && currentPage <= totalPages && currentPage > 0){
+        if(currentPage === changedPage && currentPage +1 <= totalPages && currentPage > 0){
             dispatch({type: "LOAD", payload: null});
             setCurrentPage(currentPage+1);
             setChangedPage(currentPage+1);
