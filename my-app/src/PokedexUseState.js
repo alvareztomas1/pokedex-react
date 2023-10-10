@@ -1,8 +1,109 @@
 import React from 'react';
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import {getPokedexData, getPokemonData} from "../src/api/PokedexApi.js" 
 
-const PokedexUseState =  (currentPage, setCurrentPage) => {
+
+export const fetchReducer = (state, action) => {
+
+    const {type, payload} = action;
+
+    switch(type){
+        case "LOAD":
+            return {loading: true, data: null, error: null};
+        case "SUCCESS":
+            return {...[state], loading: false, data: payload, error: null};
+        case "FAILURE":
+            return {...[state], loading: false, data: null, error: payload};
+        default:
+            return state; 
+    };
+};
+
+
+const initialState = {loading: true, data: null, error: null};
+
+async function getPokemonListData(offset){
+    const pokedexData = await getPokedexData(offset);
+    const pokemonsData = []; 
+    for(let i = 0; i < pokedexData.results.length; i++){
+        const pokemonData = await getPokemonData(pokedexData.results[i].name);
+        pokemonsData.push(pokemonData);
+
+    }
+
+    return {pokedexData, pokemonsData};
+};
+
+
+export const useFetchReducer = (currentPage, setCurrentPage) => {
+    const [state, dispatch] = useReducer(fetchReducer, initialState);
+    const [offset, setOffset] = React.useState((currentPage-1) * 20);
+    const [totalPages, setTotalPages] = React.useState(null)
+    const [changedPage, setChangedPage] = React.useState(currentPage);
+    const [selectedPokemon, setSelectedPokemon] = React.useState(null);
+
+    
+    
+    const handleGoClick = () => {
+        if(currentPage === changedPage && currentPage <= totalPages && currentPage > 0){
+            dispatch({type: "LOAD", payload: null});
+            setCurrentPage(currentPage+1);
+            setChangedPage(currentPage+1);
+            setOffset((currentPage) * 20);
+        }else if(currentPage !== changedPage && currentPage <= totalPages && currentPage > 0){
+            dispatch({type: "LOAD", payload: null});
+            setChangedPage(currentPage);
+            setOffset((currentPage - 1) * 20);
+        }
+    };
+    const handleBackClick = () => {
+        if(currentPage - 1 > 0 && currentPage - 1 <= totalPages){
+            dispatch({type: "LOAD", payload: null});
+            setCurrentPage(currentPage-1);
+            setChangedPage(currentPage-1);
+            setOffset((currentPage - 2) * 20);
+        }
+    };
+    const handlePokemonSelection = async (event) => {
+        const pokemonData = await getPokemonData(event.target.name);
+        setSelectedPokemon(pokemonData);
+    };
+    const handleCloseButton = () => {
+        setSelectedPokemon(null);
+    }
+
+
+    useEffect(()=>{
+
+        if(state.loading){
+            const getData = async () => {
+
+                try{
+                    
+                    
+                    const {pokedexData, pokemonsData} = await getPokemonListData(offset);
+                    setTotalPages(Math.ceil(pokedexData.count/20));
+                    dispatch({type: "SUCCESS", payload: pokemonsData});
+
+                }catch(e){
+                    dispatch({type: "FAILURE", payload: e});
+                }
+                
+                
+            };
+
+            getData();
+            
+        };
+
+    }, [fetchReducer, offset]);
+
+    
+
+    return {state, totalPages, handleGoClick, handleBackClick, handlePokemonSelection, selectedPokemon, handleCloseButton};
+}
+/*
+export const PokedexUseState =  (currentPage, setCurrentPage) => {
     const [data, setData] = React.useState(null);
     const [offset, setOffset] = React.useState((Number(currentPage)-1) * 20);
     const [pokemonsListData, setPokemonsListData] = React.useState([]);
@@ -45,19 +146,19 @@ const PokedexUseState =  (currentPage, setCurrentPage) => {
     useEffect(() => {
         const getData = async() => {
             try{
-                const dataPokedex = await getPokedexData(offset);
-                setTotalPages(Math.ceil(dataPokedex.count/20));
+                const pokedexData = await getPokedexData(offset);
+                setTotalPages(Math.ceil(pokedexData.count/20));
                 const pokemonListData = [];
 
-                for(let i = 0; i < dataPokedex.results.length; i++){
-                    const pokemonData = await getPokemonData(dataPokedex.results[i].name);
+                for(let i = 0; i < pokedexData.results.length; i++){
+                    const pokemonData = await getPokemonData(pokedexData.results[i].name);
                     pokemonListData.push(pokemonData);
 
                 };
 
                
                 setPokemonsListData(pokemonListData);
-                setData(dataPokedex);
+                setData(pokedexData);
                 setLoading(false);
                 
             }catch(e){
@@ -90,6 +191,5 @@ const PokedexUseState =  (currentPage, setCurrentPage) => {
         loading, handleBackButton, handlePokemonSelection, 
         selectedPokemon, handleCloseButton
     };
-}
+}*/
 
-export default PokedexUseState;

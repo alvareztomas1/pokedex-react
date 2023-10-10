@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from "react";
 import "./Pokedex.css";
 import logoImage from "../src/img/logo.png"
-import PokedexUseState from "../src/PokedexUseState.js"
+import {PokedexUseState, useFetchReducer} from "../src/PokedexUseState.js"
 
 
 const Title = ({logo}) => {
@@ -43,23 +43,27 @@ const Pokemon = ({source, name, onClick}) => {
 
 const PokemonList = ({pokemonsListData, pokemonOnClick, selectedPokemon}) =>{
 
-    return (
-        <div  className='pokemon-list' style={{display: selectedPokemon ? "none" : "grid"}}>
-        {
-            pokemonsListData.map((pokemon, index) => {
-                return <Pokemon
-                        onClick={(event) => {pokemonOnClick(event)}} 
-                        source = {pokemon.sprites.other['official-artwork'].front_default} 
-                        key={`${pokemon.name}-${index}`} 
-                        name={pokemon.name}
-                    />
-            })
-        }
-        </div>
-    );
+    if(pokemonsListData){
+        return (
+            <div  className='pokemon-list' style={{display: selectedPokemon ? "none" : "grid"}}>
+            {
+                pokemonsListData.map((pokemon, index) => {
+                    return <Pokemon
+                            onClick={(event) => {pokemonOnClick(event)}} 
+                            source = {pokemon.sprites.other['official-artwork'].front_default} 
+                            key={`${pokemon.name}-${index}`} 
+                            name={pokemon.name}
+                        />
+                })
+            }
+            </div>
+        );
+    }
+    
 }
 
 const SelectedPokemon = ({ selectedPokemon, handleCloseButton }) => {
+   
     if(selectedPokemon){
         return (
             
@@ -75,16 +79,16 @@ const SelectedPokemon = ({ selectedPokemon, handleCloseButton }) => {
                     <h2>{selectedPokemon.name.toUpperCase()}</h2>
                     
                     <div className='types'>
-                        {selectedPokemon.types.map((type) =>{
-                            return <h3 className={`type ${type.type.name}`}>{type.type.name}</h3>
+                        {selectedPokemon.types.map((type, index) =>{
+                            return <h3 key={`${type}-${index}`} className={`type ${type.type.name}`}>{type.type.name}</h3>
                         })}
                     </div>
                     <ul>{`Height: ${selectedPokemon.height} Cm.`}</ul>
                     <ul>{`Weight: ${selectedPokemon.weight/10} Kg.`}</ul>
                     <div className='stats'>
                         {
-                            selectedPokemon.stats.map((stat) => {
-                                return <ul>{`${stat.stat.name.toUpperCase()}: ${stat.base_stat}`}</ul>
+                            selectedPokemon.stats.map((stat, index) => {
+                                return <ul key={`${stat}-${index}`}>{`${stat.stat.name.toUpperCase()}: ${stat.base_stat}`}</ul>
                             })
                         }
                     </div>
@@ -104,11 +108,46 @@ const SelectedPokemon = ({ selectedPokemon, handleCloseButton }) => {
 const Pokedex = () => {
 
     const [currentPage, setCurrentPage] = React.useState(1);
-    const { pokemonsListData, totalPages, handleGoButton, loading, handleBackButton, handlePokemonSelection, selectedPokemon, handleCloseButton
-    } = PokedexUseState(currentPage, setCurrentPage);
-   
+    const {state, totalPages, handleGoClick, handleBackClick, handlePokemonSelection, selectedPokemon, handleCloseButton} = useFetchReducer(currentPage, setCurrentPage);
 
     return (
+        <React.Fragment>
+            <Loading loading={state.loading}/>
+
+            <div className='pokedex' style={{ display: state.loading ? 'none' : 'grid' }}>
+
+                <Title 
+                    logo={logoImage}/>
+                <PokemonList 
+                    pokemonsListData={state.data}
+                    pokemonOnClick={(event) => {handlePokemonSelection(event)}}
+                    selectedPokemon={selectedPokemon}
+                    />
+                <Pagination
+                    page={currentPage}
+                    totalPages={totalPages}
+                    onChange={(event)=>{
+                        setCurrentPage(Number(event.target.value))}}
+                    goButtonOnClick={() =>handleGoClick()}
+                    backButtonOnClick={()=>{handleBackClick()}}
+                    selectedPokemon={selectedPokemon}
+                    />
+                <SelectedPokemon 
+                    selectedPokemon={selectedPokemon}
+                    handleCloseButton={() => {handleCloseButton()}}
+                    />
+
+  
+            </div>
+        </React.Fragment>
+        
+    );
+
+    /*const { pokemonsListData, totalPages, handleGoButton, loading, handleBackButton, handlePokemonSelection, selectedPokemon, handleCloseButton
+    } = PokedexUseState(currentPage, setCurrentPage);*/
+    
+
+   /* return (
         <React.Fragment>
 
         <Loading loading={loading}/>
@@ -116,9 +155,14 @@ const Pokedex = () => {
 
         <div className='pokedex' style={{ display: loading ? 'none' : 'grid' }}>
 
-            <Title logo={logoImage}/>
-            <PokemonList selectedPokemon={selectedPokemon} pokemonOnClick={handlePokemonSelection} pokemonsListData={pokemonsListData} />
-            <SelectedPokemon handleCloseButton = {()=>handleCloseButton()} selectedPokemon={selectedPokemon}/>
+            <Title 
+                logo={logoImage}/>
+            <PokemonList 
+                selectedPokemon={selectedPokemon} 
+                pokemonOnClick={handlePokemonSelection} pokemonsListData={pokemonsListData} />
+            <SelectedPokemon 
+                handleCloseButton = {()=>handleCloseButton()} 
+                selectedPokemon={selectedPokemon}/>
 
             <Pagination 
 
@@ -134,7 +178,7 @@ const Pokedex = () => {
         </div>
        
         </React.Fragment>
-    );
+    );*/
 }
 
 
