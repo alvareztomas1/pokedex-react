@@ -3,9 +3,8 @@ const SelectedPokemon = ({ selectedPokemon, handleCloseButton }) => {
     if(selectedPokemon){
         return (
             
-            <div className='pokemon-info' style={{display: selectedPokemon ?  "block" : "none"}}>
+            <div className={selectedPokemon ? 'pokemon-info' : "hidden" }>
                 <button onClick={handleCloseButton} className='close-button'>X</button>
-
                 
                 <div className='container'>
                     

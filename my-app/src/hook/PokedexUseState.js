@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useReducer } from "react";
-import {getPokedexData, getPokemonData} from "../src/api/PokedexApi.js" 
+import {getPokedexData, getPokemonData} from "../api/PokedexApi.js" 
 
 
 export const fetchReducer = (state, action) => {
@@ -70,7 +70,7 @@ export const useFetchReducer = (currentPage, setCurrentPage) => {
     };
     const handleCloseButton = () => {
         setSelectedPokemon(null);
-    }
+    };
 
 
     useEffect(()=>{
@@ -79,8 +79,6 @@ export const useFetchReducer = (currentPage, setCurrentPage) => {
             const getData = async () => {
 
                 try{
-                    
-                    
                     const {pokedexData, pokemonsData} = await getPokemonListData(offset);
                     setTotalPages(Math.ceil(pokedexData.count/20));
                     dispatch({type: "SUCCESS", payload: pokemonsData});
@@ -88,7 +86,6 @@ export const useFetchReducer = (currentPage, setCurrentPage) => {
                 }catch(e){
                     dispatch({type: "FAILURE", payload: e});
                 }
-                
                 
             };
 

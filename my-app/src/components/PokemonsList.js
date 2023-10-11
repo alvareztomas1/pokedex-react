@@ -15,7 +15,7 @@ const PokemonList = ({pokemonsListData, pokemonOnClick, selectedPokemon}) =>{
 
     if(pokemonsListData){
         return (
-            <div  className='pokemon-list' style={{display: selectedPokemon ? "none" : "grid"}}>
+            <div  className={selectedPokemon ? "hidden" : "pokemon-list"} >
             {
                 pokemonsListData.map((pokemon, index) => {
                     return <Pokemon

@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Pokedex from './Pokedex';
+import Pokedex from './components/Pokedex';
 
 function App() {
 

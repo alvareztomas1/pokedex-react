@@ -1,13 +1,13 @@
 import React from 'react';
 import { useEffect } from "react";
-import "./Pokedex.css";
-import logoImage from "../src/img/logo.png"
-import {PokedexUseState, useFetchReducer} from "../src/PokedexUseState.js"
-import Title from "../src/components/Title.js"
-import Pagination from './components/Pagination.js';
-import Loading from './components/Loading.js';
-import PokemonList from './components/PokemonsList.js';
-import SelectedPokemon from "./components/SelectedPokemon.js"
+import "../Pokedex.css";
+import logoImage from "../img/logo.png"
+import {useFetchReducer} from "../hook/PokedexUseState.js"
+import Title from "./Title.js"
+import Pagination from './Pagination.js';
+import Loading from './Loading.js';
+import PokemonList from './PokemonsList.js';
+import SelectedPokemon from "./SelectedPokemon.js"
 
 
 
@@ -20,7 +20,7 @@ const Pokedex = () => {
         <React.Fragment>
             <Loading loading={state.loading}/>
 
-            <div className='pokedex' style={{ display: state.loading ? 'none' : 'grid' }}>
+            <div className={state.loading ? "hidden" : "pokedex"}>
 
                 <Title 
                     logo={logoImage}/>
