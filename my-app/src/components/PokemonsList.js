@@ -12,7 +12,6 @@ const Pokemon = ({source, name, onClick}) => {
 }
 
 const PokemonList = ({pokemonsListData, pokemonOnClick, selectedPokemon}) =>{
-
     if(pokemonsListData){
         return (
             <div  className={selectedPokemon ? "hidden" : "pokemon-list"} >

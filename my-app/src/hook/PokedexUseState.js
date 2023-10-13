@@ -1,7 +1,8 @@
 import React from 'react';
 import { useEffect, useReducer } from "react";
-import {getPokedexData, getPokemonData} from "../api/PokedexApi.js" 
+import {getPokedexData, getPokemonData} from "../services/PokedexServices.js" 
 
+const initialState = {loading: true, data: null, error: null};
 
 export const fetchReducer = (state, action) => {
 
@@ -20,17 +21,15 @@ export const fetchReducer = (state, action) => {
 };
 
 
-const initialState = {loading: true, data: null, error: null};
 
 async function getPokemonListData(offset){
     const pokedexData = await getPokedexData(offset);
     const pokemonsData = []; 
     for(let i = 0; i < pokedexData.results.length; i++){
+        
         const pokemonData = await getPokemonData(pokedexData.results[i].name);
         pokemonsData.push(pokemonData);
-
     }
-
     return {pokedexData, pokemonsData};
 };
 
@@ -77,7 +76,6 @@ export const useFetchReducer = (currentPage, setCurrentPage) => {
 
         if(state.loading){
             const getData = async () => {
-
                 try{
                     const {pokedexData, pokemonsData} = await getPokemonListData(offset);
                     setTotalPages(Math.ceil(pokedexData.count/20));
