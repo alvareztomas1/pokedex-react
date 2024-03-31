@@ -1,14 +1,11 @@
 import React from 'react';
-import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import logoImage from "../img/logo.png"
 import { useFetchReducer } from "../hook/PokedexUseState.js"
 import Title from "./Title.js"
 import Pagination from './Pagination.js';
-import Loading from './Loading.js';
 import PokemonList from './PokemonsList.js';
 import SelectedPokemon from "./SelectedPokemon.js"
-
 import { Spinner } from "react-bootstrap"
 
 
