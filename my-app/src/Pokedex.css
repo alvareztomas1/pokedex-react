@@ -1,104 +1,40 @@
-.loading{
-  text-align: center;
-}
-
-.pokedex{
-    text-align: center;
-}
 body{
   background-color: rgba(189, 207, 86, 0.51);
+  text-align: center;
 }
-.hidden{
-  display: none;
-}
-
-
-.pokemon-list {  
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      ". . . . ."
-      ". . . . ."
-      ". . . . ."
-      ". . . . .";
-  }
-  
-  .container{
-    height: 100%;
-  }
-  .pokemon{
-    height: 150px;
-    width: 150px;
-    cursor: pointer;
-    margin: 10px;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 5%;
-    border-spacing: 10px;
-  }
-
-  .pagination-button{
-    background-color: transparent;
-    color: black;
-    border: 2px solid white;
-    font-size: 25px;
-    cursor: pointer;
-    margin: 10px;
-  }
-  .pagination-input{
-    background: transparent;
-    border-color: white;
-    font-size: 25px;
-    width: 50px;
-    text-align: center;
-    margin: 10px;
-    border: 2px solid white;
-  }
-  .total-pages{
-    font-size: 25px;
-  }
-.close-button{
-  position: relative;
-  bottom: -10px;
-  right: -300px;
+.pokemon{
+  height: 150px;
+  width: 150px;
   cursor: pointer;
-  border-color: transparent;
-  border-radius: 10%;
-  background-color: rgb(192, 0, 0);
-  font-size: 15px;
-  color: white;
-
-}
-.pokemon-info{
-  display: block;
-  background-color: cornsilk;
-  text-align: center;    margin: auto;
-  width: 850px;
-  height: 500px;    
-  border: white  2px solid;
+  margin: 10px;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 5%;
+  border-spacing: 10px;
 }
 .selected-pokemon{
   height: 150px;
   width: 150px;
   margin: 10px;
-  border: 2px solid rgb(255, 255, 255);      border-radius: 5%;
-  border-spacing: 10px;
 }
-  
+.pokemon-info{
+  background-color: cornsilk;
+  border: white  2px solid;
+  border-radius: 2%;
+  max-width: 700px;
+}
 .types{    
   display: inline-flex; 
 }
-  .type{
-    margin: 10px;
-    border-radius: 10%;
-    color: white;
-    padding: 5px;
-    
-  }
-.stats{
-    display: flex;
+.type{
+  font-size: 20px;
+  margin: 5px;
+  border-radius: 8%;
+  color: white;
+  padding: 5px;
+  
+}
+.hidden{
+  display: none;
 }
 .fire{
   background-color: rgb(231, 33, 33);

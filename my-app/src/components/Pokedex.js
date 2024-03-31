@@ -22,7 +22,7 @@ const Pokedex = () => {
                 {state.loading &&
                     <Spinner id="loading" animation="border" variant="light" />
                 }
-                {!state.loading && <div id="pokedex" className="pokedex">
+                {!state.loading && <div id="pokedex">
 
                     <Title
                         logo={logoImage} />
