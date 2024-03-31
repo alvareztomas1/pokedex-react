@@ -1,4 +1,6 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
+import TotalPages from "./pagination/TotalPages";
+import PageSelector from "./pagination/PageSelector";
 
 const Pagination = ({ page, totalPages, onChange, goButtonOnClick, backButtonOnClick, selectedPokemon }) => {
     return (
@@ -10,10 +12,10 @@ const Pagination = ({ page, totalPages, onChange, goButtonOnClick, backButtonOnC
                             <Button onClick={backButtonOnClick} variant="outline-dark" id="back-button">Back</Button>
                         </Col>
                         <Col xs={2} sm={2} md={2} lg={2}>
-                            <input type="number" value={page} onChange={onChange} className='form-control text-center' id="page-number"></input>
+                            <PageSelector page={page} onChange={onChange} />                            
                         </Col>
                         <Col xs={1} sm={1} md={1} lg={1}>
-                            <h4 id="total-pages" className='title'>{totalPages}</h4>
+                            <TotalPages totalPages={totalPages} />
                         </Col>
                         <Col xs={2} sm={2} md={2} lg={1}>
                             <Button variant="outline-dark" onClick={goButtonOnClick} id="next-button">Go </Button>
