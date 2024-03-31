@@ -10,14 +10,14 @@ information and list twenty pokemons per page, being able to click each one to g
 
 | Feature                   | Description                                                                                           |
 |------------------------|-------------------------------------------------------------------------------------------------------|
-| Component encapsulation | Every aspect of the app is divided into components, achieving a batter organization, maintainability and scalability                                                                        |
-| Local storage  | App uses `Local Storage` to reduce the amount of fetches needed to obtain information, improving performance     |
+| Component encapsulation | Every aspect of the app is divided into components, achieving a batter organization, maintainability and scalability.                                                                        |
+| Local storage  | App uses `Local Storage` to reduce the amount of fetches needed to obtain information, improving performance.     |
 
 ## Technologies used
 
 - **React create app**: Create React App is a command-line tool (CLI) to set up and scaffold the React.js project. 
 - **Bootstrap**: Bootstrap is a popular front-end framework for building responsive websites and web applications.
-- **Cypress**: Cypress is a modern end-to-end testing framework built for the modern web. It enables developers to write automated tests for web applications
+- **Cypress**: Cypress is a modern end-to-end testing framework built for the modern web. It enables developers to write automated tests for web applications.
 
 ### To run the project
 
