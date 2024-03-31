@@ -19,34 +19,34 @@ const Pokedex = () => {
 
     return (
         <React.Fragment>
-            <div className={state.loading ? "hidden" : "pokedex"}>
-
-                <Title 
-                    logo={logoImage}/>
-                <PokemonList 
-                    pokemonsListData={state.data}
-                    pokemonOnClick={(event) => {handlePokemonSelection(event)}}
-                    selectedPokemon={selectedPokemon}
                 {state.loading &&
                     <Spinner id="loading" animation="border" variant="light" />
                 }
-                    />
-                <Pagination
-                    page={currentPage}
-                    totalPages={totalPages}
-                    onChange={(event)=>{
-                        setCurrentPage(Number(event.target.value))}}
-                    goButtonOnClick={() =>handleGoClick()}
-                    backButtonOnClick={()=>{handleBackClick()}}
-                    selectedPokemon={selectedPokemon}
-                    />
-                <SelectedPokemon 
-                    selectedPokemon={selectedPokemon}
-                    handleCloseButton={() => {handleCloseButton()}}
-                    />
+                {!state.loading && <div id="pokedex" className="pokedex">
 
-  
-            </div>
+                    <Title
+                        logo={logoImage} />
+                    <PokemonList
+                        pokemonsListData={state.data}
+                        pokemonOnClick={(event) => { handlePokemonSelection(event) }}
+                        selectedPokemon={selectedPokemon}
+                    />
+                    <Pagination
+                        page={currentPage}
+                        totalPages={totalPages}
+                        onChange={(event) => {
+                            setCurrentPage(Number(event.target.value))
+                        }}
+                        goButtonOnClick={() => handleGoClick()}
+                        backButtonOnClick={() => { handleBackClick() }}
+                        selectedPokemon={selectedPokemon}
+                    />
+                    <SelectedPokemon
+                        selectedPokemon={selectedPokemon}
+                        handleCloseButton={() => { handleCloseButton() }}
+                    />
+                </div>}
+
         </React.Fragment>
 
     );
