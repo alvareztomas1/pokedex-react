@@ -1,8 +1,8 @@
+import { Image } from "react-bootstrap";
+
 const Title = ({logo}) => {
     return (
-        <div className="title">
-            <img src={logo}/>
-        </div>
+        <Image alt="pokedex logo" id="title" src={logo}/>
     );
 };
 
