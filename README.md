@@ -19,7 +19,7 @@ information and list twenty pokemons per page, being able to click each one to g
 - **Bootstrap**: Bootstrap is a popular front-end framework for building responsive websites and web applications.
 - **Cypress**: Cypress is a modern end-to-end testing framework built for the modern web. It enables developers to write automated tests for web applications.
 
-### To run the project
+### How to run the project
 
 `npm install` to install all dependencies used in the project
 and `npm start` to run the app.
